@@ -4,12 +4,10 @@ import datetime
 
 db = psycopg2.connect("dbname=news")
 the_cursor = db.cursor()
-the_cursor.execute("update log set path = replace(path, '/article/', '');")
-
 
 def most_popular_articles():
     the_cursor.execute('''select articles.title, count(log.path) as views
-    from articles, log where articles.slug =log.path
+    from articles, log where articles.slug = substring(log.path, 10)
     group by articles.title order by views desc limit 3;''')
     result = the_cursor.fetchall()
     print("Most popular three articles of all time:\n")
@@ -21,7 +19,7 @@ def most_popular_articles():
 def most_popular_authors():
     the_cursor.execute('''select authors.name, count(log.path) as views
     from authors, articles, log
-    where articles.slug = log.path and articles.author = authors.id
+    where articles.slug = substring(log.path, 10) and articles.author = authors.id
     group by authors.name order by views desc limit 3;''')
     result = the_cursor.fetchall()
     print("Most popular three authors of all time:\n")
