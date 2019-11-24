@@ -44,7 +44,7 @@ def error_days():
     result = the_cursor.fetchall()
     print("days where more than 1% of requests lead to errors:\n")
     for x in result:
-        print(x[0], "—", x[1],"% errors")
+        print(x[0], "—", x[1], "% errors")
 
 
 most_popular_articles()
