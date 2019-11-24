@@ -18,17 +18,17 @@ Copy the source code on your machine and run it against the database.
 
 You just need to run the program.py file. nothing else.
 
-### Code explanation 
+## Code explanation 
 
 This program contains three functions:
 
 1.most_popular_articles()
 
 
-1.most_popular_authors()
+2.most_popular_authors()
 
 
-1.error_days()
+3.error_days()
 
 
 
