@@ -2,7 +2,14 @@
 import psycopg2
 import datetime
 
-db = psycopg2.connect("dbname=news")
+try:
+    db = psycopg2.connect("dbname=news")
+except psycopg2.Error as e:
+    print("Unable to connect to the database")
+    print(e.pgerror)
+    print(e.diag.message_detail)
+    sys.exit(1)
+
 the_cursor = db.cursor()
 
 
@@ -31,11 +38,6 @@ def most_popular_authors():
 
 
 def error_days():
-    the_cursor.execute('''create view alldayviews as select date(time),
-     count(date(time)) from log  group by date order by date desc;''')
-    the_cursor.execute('''create view errordayviews as select date(time),
-    count(date(time)) from log
-    where status > '400' group by date order by date desc;''')
     the_cursor.execute('''select alldayviews.date,
     round(((errordayviews.count*100.0) / alldayviews.count), 3) as rate
     from alldayviews, errordayviews

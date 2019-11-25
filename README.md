@@ -21,6 +21,16 @@ unzip newsdata.zip
 ```
 psql -d news -f newsdata.sql
 ```
+* Created the needed views by running this commands in psql:
+```
+create view alldayviews as select date(time),
+   count(date(time)) from log  group by date order by date desc;
+```
+```
+create view errordayviews as select date(time),
+  count(date(time)) from log
+  where status > '400' group by date order by date desc;
+```
 * Run script in this repo
 ```
 python3 program.py
